@@ -1,27 +1,39 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <div class="container">
+    <search-movies/>
+    <found-movies/>
+    <router-view />
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+import FoundMovies from './components/FoundMovies.vue';
+import SearchMovies from './components/SearchMovies.vue';
 
 export default defineComponent({
   name: 'App',
-  components: {
-    HelloWorld
+  components: { 
+    SearchMovies,
+    FoundMovies,
   }
 });
 </script>
 
 <style>
+@import url('http://fonts.cdnfonts.com/css/montserrat');
+body {
+  margin:0;
+  font-family: 'Montserrat', sans-serif;
+}
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  margin: 0;
+  padding-left: 56px;
+  padding-right: 56px;
+  padding-top: 54px;
+  background-color: #555555;
+}
+.container {
+  width: 1200px;
 }
 </style>

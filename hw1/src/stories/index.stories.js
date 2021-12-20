@@ -1,25 +1,43 @@
 import { action } from '@storybook/addon-actions'
 import { linkTo } from '@storybook/addon-links'
-
-import MyButton from '../components/MyButton.vue'
-
+import Logo from '../components/Logo.vue';
+import SearchMovies from '../components/SearchMovies.vue';
+import SearchComponent from '../components/SearchComponent.vue';
+import FoundMoviesNav from '../components/FoundMoviesNav.vue';
+import MovieItem from '../components/MovieItem.vue';
 export default {
-  title: 'Button',
+  title: 'App',
 }
-
-export const withText = () => ({
-  components: { MyButton },
-  template: '<my-button @click="action">Hello Button</my-button>',
-  methods: { action: action('clicked') }
-})
-
-export const withJSX = () => ({
+export const simpleLogo = () => ({
   render() {
-    return <MyButton onClick={linkTo('Button', 'With Some Emoji')}>With JSX</MyButton>;
+    return <Logo></Logo>;
   }
 })
+export const SearchMoviesComponent = () => ({
+  render() {
+    return <SearchMovies></SearchMovies>;
+  }
+})
+export const Search = () => ({
+  render() {
+    return <SearchComponent></SearchComponent>;
+  }
+})
+export const MoviesNav = () => ({
+  render() {
+    return <FoundMoviesNav></FoundMoviesNav>;
+  }
+})
+const movie_data =  {
+  id: 1,
+  name: "Pulp fiction",
+  year: 2019, 
+  description: "Action & Adventiure", 
+  src: require("../assets/Pulp.png")
+}
 
-export const withSomeEmoji = () => ({
-  components: { MyButton },
-  template: '<my-button>😀 😎 👍 💯</my-button>'
+export const Movie = () => ({
+  render() {
+    return <MovieItem movie={movie_data}></MovieItem>;
+  }
 })
