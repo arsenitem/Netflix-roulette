@@ -2,34 +2,33 @@
   <div class="details">
     <Logo></Logo>
     <div id="details-img">
-      <img :src="movie.poster_path">
+      <img :src="movie.poster_path" />
     </div>
     <div id="details-title">
-      {{movie.title}}
+      {{ movie.title }}
     </div>
   </div>
 </template>
 
 <script>
-import Logo from '../components/Logo.vue';
+import Logo from "../components/Logo.vue";
 export default {
   name: "Details",
   components: {
-    Logo
+    Logo,
   },
   computed: {
-     movies() {
-      return require('../../movies.json');
+    movies() {
+      return require("../../movies.json");
     },
     movie() {
       if (this.movies) {
-        return this.movies.find(item => item.id == this.$route.query.id);
+        return this.movies.find((item) => item.id == this.$route.query.id);
       } else {
         return {};
       }
-      
-    }
-  }
+    },
+  },
 };
 </script>
 <style>
@@ -38,21 +37,21 @@ export default {
   background: #232323;
 }
 .details .app-label {
-  color: #F65261;
-    margin-left: 60px;
-    margin-top: 20px;
-    font-style: normal;
-font-weight: 300;
-font-size: 20px;
-line-height: 24px;
+  color: #f65261;
+  margin-left: 60px;
+  margin-top: 20px;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 24px;
 }
-.details .app-label #label-bold{
-  color: #F65261;;
-    margin-top: 20px;
-    font-style: normal;
-font-weight: 300;
-font-size: 20px;
-line-height: 24px;
+.details .app-label #label-bold {
+  color: #f65261;
+  margin-top: 20px;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 24px;
 }
 #details-img {
   position: absolute;
@@ -61,7 +60,7 @@ line-height: 24px;
   margin-left: 60px;
   margin-top: 91px;
 }
-#details-img img{
+#details-img img {
   width: 323.41px;
   height: 486px;
 }
@@ -69,16 +68,16 @@ line-height: 24px;
   width: 600px;
   margin-top: 91px;
   font-style: normal;
-font-weight: 300;
-font-size: 40px;
-line-height: 49px;
-/* identical to box height */
+  font-weight: 300;
+  font-size: 40px;
+  line-height: 49px;
+  /* identical to box height */
 
-text-align: center;
-letter-spacing: 1px;
-text-transform: uppercase;
-position: absolute;
-margin-left: 360px;
-color: #FFFFFF;
+  text-align: center;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  position: absolute;
+  margin-left: 360px;
+  color: #ffffff;
 }
 </style>

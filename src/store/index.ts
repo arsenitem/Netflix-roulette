@@ -2,7 +2,7 @@ import { createStore } from "vuex";
 
 export default createStore({
   state: {
-    movies: []
+    movies: [],
   },
   mutations: {},
   actions: {},
