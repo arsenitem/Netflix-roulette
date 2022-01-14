@@ -1,11 +1,11 @@
 <template>
   <div class="search-block">
-    <Logo></Logo>
+    <Logo/>
     <div id="add-movie">
       <div>+ add movie</div>
     </div>
     <div id="find-label">find your movie</div>
-    <SearchComponent></SearchComponent>
+    <SearchComponent/>
   </div>
 </template>
 

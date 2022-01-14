@@ -10,22 +10,22 @@ export default {
 }
 export const simpleLogo = () => ({
   render() {
-    return <Logo></Logo>;
+    return <Logo/>;
   }
 })
 export const SearchMoviesComponent = () => ({
   render() {
-    return <SearchMovies></SearchMovies>;
+    return <SearchMovies/>;
   }
 })
 export const Search = () => ({
   render() {
-    return <SearchComponent></SearchComponent>;
+    return <SearchComponent />;
   }
 })
 export const MoviesNav = () => ({
   render() {
-    return <FoundMoviesNav></FoundMoviesNav>;
+    return <FoundMoviesNav/>;
   }
 })
 const movie_data =  {
@@ -42,6 +42,6 @@ const movie_data =  {
 
 export const Movie = () => ({
   render() {
-    return <MovieItem movie={movie_data}></MovieItem>;
+    return <MovieItem movie={movie_data}/>;
   }
 })

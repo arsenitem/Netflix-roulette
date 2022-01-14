@@ -1,6 +1,6 @@
 <template>
   <div class="details">
-    <Logo></Logo>
+    <Logo/>
     <div id="details-img">
       <img :src="movie.poster_path" />
     </div>
@@ -22,7 +22,7 @@ export default {
       return require("../../movies.json");
     },
     movie() {
-      if (this.movies) {
+      if (this.movies.length) {
         return this.movies.find((item) => item.id == this.$route.query.id);
       } else {
         return {};
