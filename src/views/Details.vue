@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     movies() {
-      return require("../../movies.json");
+      return this.$store.state.movies
     },
     movie() {
       if (this.movies.length) {

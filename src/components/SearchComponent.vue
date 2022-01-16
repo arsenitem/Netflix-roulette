@@ -1,12 +1,23 @@
 <template>
   <div id="movie-search">
-    <input placeholder="What do you want to watch?" />
+    <input placeholder="What do you want to watch?" v-model="searchInput"/>
     <button id="search-btn">SEARCH</button>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      searchInput: '',
+    }
+  },
+  watch: {
+    searchInput(val) {
+      this.$store.commit('setSearchInput', val);
+    }
+  }
+};
 </script>
 
 <style>

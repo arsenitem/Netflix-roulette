@@ -1,6 +1,6 @@
 <template>
   <div class="movie-item" @click="onDetailsClick">
-    <img :src="movie.img_src"/>
+    <img :src="img_src"/>
     <div id="movie-name">{{ movie.title }}</div>
     <div id="movie-year">
       {{ date }}
@@ -12,7 +12,14 @@
 </template>
 
 <script>
+import isInViewPoint from './../utils/viewpoint';
 export default {
+  data() {
+    return {
+      img_src: '',
+      offsetTop: 0,
+    }
+  },
   props: {
     movie: Object,
   },
@@ -23,11 +30,37 @@ export default {
     genre() {
       return this.movie.genres.join(", ");
     },
+    search() {
+      return this.$store.state.searchInput
+    }
+  },
+  watch: {
+    offsetTop() {
+      this.itemViewport();
+    },
+    search() {
+      this.itemViewport();
+    }
   },
   methods: {
     onDetailsClick() {
       this.$router.push({ name: "Details", query: { id: this.movie.id } });
     },
+    onScroll (e) {
+      this.offsetTop = window.pageYOffset || document.documentElement.scrollTop
+    },
+    itemViewport() {
+      this.img_src = isInViewPoint(this.$el) ? this.movie.poster_path : '';
+    }
+  },
+  created () {
+    window.addEventListener('scroll', this.onScroll);
+  },
+  mounted() {
+    this.offsetTop++;
+  },
+  destroyed () {
+    window.removeEventListener('scroll', this.onScroll);
   },
 };
 </script>
