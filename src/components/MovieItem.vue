@@ -45,6 +45,7 @@ export default {
   methods: {
     onDetailsClick() {
       this.$router.push({ name: "Details", query: { id: this.movie.id } });
+      window.scrollTo(0,0)
     },
     onScroll (e) {
       this.offsetTop = window.pageYOffset || document.documentElement.scrollTop

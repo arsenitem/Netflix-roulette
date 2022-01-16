@@ -9,11 +9,17 @@
       <div id="details-title">
       {{ movie.title }}
       </div>
+      <div id="details-rating">
+        {{movie.vote_average}}
+      </div>
       <div id="details-year">
       {{ getYear(movie.release_date)}}
       </div>
       <div id="details-duration">
       {{ getDuration(movie.runtime) }}
+      </div>
+      <div id="details-overview">
+      {{ movie.overview }}
       </div>
     </div>
     
@@ -41,7 +47,10 @@ export default {
   },
   methods: {
     getYear(date) {
-      return date.substring(0, 4);
+      if (date) {
+        return date.substring(0, 4);
+      }
+      return null
     },
     getDuration(time) {
       let h = Math.floor(time / 60);
@@ -75,6 +84,18 @@ export default {
   font-weight: 300;
   font-size: 20px;
   line-height: 24px;
+}
+#details-rating {
+  height: 60px;
+  width: 60px;
+  font-style: normal;
+  font-weight: 300;
+font-size: 20px;
+line-height: 24px;
+text-align: center;
+text-transform: uppercase;
+
+color: #FFFFFF;
 }
 #details-img {
   position: absolute;
@@ -125,5 +146,18 @@ width: 28px;
 height: 29px;
 left: 1280px;
 top: 72px;
+}
+
+#details-overview {
+  display: inline-block;
+  margin-top: 15px;
+  font-weight: 300;
+font-size: 20px;
+line-height: 24px;
+
+color: #FFFFFF;
+
+mix-blend-mode: normal;
+opacity: 0.5;
 }
 </style>

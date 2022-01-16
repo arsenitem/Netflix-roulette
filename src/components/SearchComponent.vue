@@ -15,6 +15,7 @@ export default {
   watch: {
     searchInput(val) {
       this.$store.commit('setSearchInput', val);
+      this.$store.dispatch('getAllMovies')
     }
   }
 };
