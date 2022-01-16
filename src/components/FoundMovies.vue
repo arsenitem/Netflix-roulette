@@ -6,9 +6,10 @@
     </div>
     <div class="movies">
       <movie-item
-        v-for="item in movies"
+        v-for="item in moviesArray"
         :key="item.id"
         :movie="item"
+        :ref="'mov'+item.id"
       ></movie-item>
     </div>
   </div>
@@ -21,7 +22,15 @@
 import FoundMoviesNav from "./FoundMoviesNav.vue";
 import MovieItem from "./MovieItem.vue";
 import Logo from "./Logo.vue";
+
+import isInViewPoint from './../utils/viewpoint';
 export default {
+  data() {
+    return {
+      offsetTop: 0,
+      moviesArray: require("../../movies.json"),
+    }
+  },
   computed: {
     movies() {
       return require("../../movies.json");
@@ -30,7 +39,41 @@ export default {
       return this.movies.length;
     },
   },
+  watch: {
+    offsetTop (val) {
+       this.itemViewport()
+    }
+  },
   components: { FoundMoviesNav, MovieItem, Logo },
+  methods: {
+    onScroll (e) {
+      this.offsetTop = window.pageYOffset || document.documentElement.scrollTop
+      // this.offsetTop = window.pageYOffset || document.documentElement.scrollTop
+    },
+    itemViewport() {
+      this.moviesArray.forEach(movie => {
+        let ref = this.$refs['mov'+movie.id]
+        if (ref[0]) {
+          movie.img_src = isInViewPoint(ref[0].$el) ? movie.poster_path : '';
+        }
+      })
+      Object.values(this.$refs).forEach(item => {
+        if (item[0]) {
+          let rrr = isInViewPoint(item[0].$el);
+          
+        }
+      })
+    }
+  },
+  created () {
+    window.addEventListener('scroll', this.onScroll);
+  },
+  mounted() {
+    this.offsetTop++;
+  },
+  destroyed () {
+    window.removeEventListener('scroll', this.onScroll);
+  },
 };
 </script>
 

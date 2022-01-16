@@ -1,6 +1,6 @@
 <template>
   <div class="movie-item" @click="onDetailsClick">
-    <img :src="movie.poster_path" />
+    <img :src="movie.img_src"/>
     <div id="movie-name">{{ movie.title }}</div>
     <div id="movie-year">
       {{ date }}
