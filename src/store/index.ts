@@ -5,7 +5,8 @@ export default createStore({
   state: {
     movies: [],
     searchInput: '',
-    sort: {name: '', title: 'DEFAULT'}
+    sort: {name: 'release_date', title: 'RELEASE DATE'},
+    sortOrder: 'desc'
   },
   mutations: {
     setMovies(state, movies) {
@@ -16,13 +17,26 @@ export default createStore({
     },
     setSort(state, sort) {
       state.sort = sort;
+    },
+    setSortOrder(state, order) {
+      state.sortOrder = order;
     }
   },
   actions: {
-    getAllMovies(ctx, payload) {
-      api.get(`movies?limit=30&search=${ctx.state.searchInput}&sortBy=${ctx.state.sort.name}`).then(response => {
-        ctx.commit('setMovies', response.data.data);
+    async getAllMovies({state, commit}, payload) {
+      return api.get(`movies?limit=30&search=${state.searchInput}&searchBy=title&sortBy=${state.sort.name}&sortOrder=${state.sortOrder}`).then(response => {
+        commit('setMovies', response.data.data);
       });
+    },
+    updateSearchInput({ commit }, val) {
+      commit('setSearchInput', val);
+    },
+    updateSort({ commit }, val) {
+      commit('setSort', val);
+    },
+    updateSortOrder({state, commit}) {
+      const order = state.sortOrder === 'asc' ? 'desc' : 'asc';
+      commit('setSortOrder', order);
     }
   },
   modules: {},

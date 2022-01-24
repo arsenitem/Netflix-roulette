@@ -1,23 +1,22 @@
 <template>
   <div id="movie-search">
-    <input placeholder="What do you want to watch?" v-model="searchInput"/>
+    <input placeholder="What do you want to watch?" @input="onSearchInput"/>
     <button id="search-btn">SEARCH</button>
   </div>
 </template>
 
 <script>
+import { debounce } from 'lodash';
 export default {
-  data() {
-    return {
-      searchInput: '',
-    }
+  methods: {
+    onSearchInput(e) {
+      this.debouncedUpdate(e.target.value);
+    },
+    debouncedUpdate: debounce(function(val) {
+      this.$store.dispatch('updateSearchInput', val);
+      this.$store.dispatch('getAllMovies');
+    }, 1000)
   },
-  watch: {
-    searchInput(val) {
-      this.$store.commit('setSearchInput', val);
-      this.$store.dispatch('getAllMovies')
-    }
-  }
 };
 </script>
 

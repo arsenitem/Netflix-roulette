@@ -22,10 +22,13 @@
 import FoundMoviesNav from "./FoundMoviesNav.vue";
 import MovieItem from "./MovieItem.vue";
 import Logo from "./Logo.vue";
+import isInViewPoint from './../utils/viewpoint';
+import { throttle } from 'lodash';
 
 export default {
   data() {
     return {
+      offsetTop: 0,
     }
   },
   computed: {
@@ -39,12 +42,45 @@ export default {
     moviesCount() {
       return this.movies.length;
     },
+    search() {
+      return this.$store.state.searchInput
+    }
   },
   components: { FoundMoviesNav, MovieItem, Logo },
   methods: {
+    onScroll (e) {
+      this.offsetTop = window.pageYOffset || document.documentElement.scrollTop
+    },
+    throttledViewport: throttle(function() {
+      this.movies.forEach(mov => {
+        const movRef = this.$refs['mov'+mov.id]
+        if (movRef) {
+          const movieItem = movRef[0]
+          movieItem.img_src = isInViewPoint(movieItem.$el) ? mov.poster_path : '';
+        }
+      })
+    }, 800)
   },
-  mounted() {
-    return this.$store.dispatch('getAllMovies');
+  watch: {
+    offsetTop() {
+      this.throttledViewport();
+    },
+    movies: {
+      deep: true,
+      handler() {
+        this.offsetTop++;
+      }
+    }
+  },
+  async mounted() {
+    await this.$store.dispatch('getAllMovies');
+    this.offsetTop++;
+  },
+  created () {
+    window.addEventListener('scroll', this.onScroll);
+  },
+  destroyed () {
+    window.removeEventListener('scroll', this.onScroll);
   },
 };
 </script>

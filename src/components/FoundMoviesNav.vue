@@ -13,6 +13,7 @@
       <div id="myDropdown" class="dropdown-content">
         <a v-for="opt in sortOptions" :key="opt.name" @click="onSortClick(opt)">{{opt.title}}</a>
       </div>
+      <span id="sort-by" @click="changeSortOrder"><img src="../assets/sort.svg" style="margin-bottom:2px" :class="sortOrder=== 'asc'? 'rotate180': ''"></span>
     </div>
   </div>
 </template>
@@ -22,7 +23,6 @@ export default {
   data() {
     return {
       sortOptions: [
-        {name: '', title: 'DEFAULT'},
         {name: 'release_date', title: 'RELEASE DATE'},
         {name: 'vote_average', title: 'RATING'},
         {name: 'runtime', title: 'RUNTIME'},
@@ -31,7 +31,10 @@ export default {
   },
   computed: {
     sort() {
-      return this.$store.state.sort
+      return this.$store.state.sort;
+    },
+    sortOrder() {
+      return this.$store.state.sortOrder;
     }
   },
   methods: {
@@ -39,8 +42,12 @@ export default {
       document.getElementById("myDropdown").classList.toggle("show");
     },
     onSortClick(opt) {
-      this.$store.commit('setSort', opt)
+      this.$store.dispatch('updateSort', opt)
       document.getElementById("myDropdown").classList.toggle("show");
+      this.$store.dispatch('getAllMovies');
+    },
+    changeSortOrder() {
+      this.$store.dispatch('updateSortOrder');
       this.$store.dispatch('getAllMovies');
     }
   },
@@ -48,8 +55,7 @@ export default {
     window.onclick = function(event) {
     if (!event.target.matches('.dropbtn')) {
       let dropdowns = document.getElementsByClassName("dropdown-content");
-      let i;
-      for (i = 0; i < dropdowns.length; i++) {
+      for (let i = 0; i < dropdowns.length; i++) {
         let openDropdown = dropdowns[i];  
         if (openDropdown.classList.contains('show')) {
           openDropdown.classList.remove('show');
@@ -83,6 +89,12 @@ export default {
 #sort {
   position: absolute;
   margin-left: 782px;
+}
+#sort-by {
+  margin-left: 5px;
+}
+.rotate180 {
+  transform: rotateX(180deg);
 }
 #sort-label {
   font-style: normal;
