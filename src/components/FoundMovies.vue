@@ -33,18 +33,11 @@ export default {
   },
   computed: {
     movies() {
-      const search = this.$store.state.searchInput
-      if (search) {
-        return this.$store.state.movies.filter(mov => mov.title.toLowerCase().includes(search.toLowerCase()));
-      }
-      return this.$store.state.movies;
+      return this.$store.getters.movies;
     },
     moviesCount() {
       return this.movies.length;
     },
-    search() {
-      return this.$store.state.searchInput
-    }
   },
   components: { FoundMoviesNav, MovieItem, Logo },
   methods: {
@@ -56,7 +49,9 @@ export default {
         const movRef = this.$refs['mov'+mov.id]
         if (movRef) {
           const movieItem = movRef[0]
-          movieItem.img_src = isInViewPoint(movieItem.$el) ? mov.poster_path : '';
+          if (movieItem) {
+             movieItem.img_src = isInViewPoint(movieItem.$el) ? mov.poster_path : '';
+          } 
         }
       })
     }, 800)
@@ -68,7 +63,9 @@ export default {
     movies: {
       deep: true,
       handler() {
-        this.offsetTop++;
+        this.$nextTick(() => {
+          this.offsetTop++;
+        });
       }
     }
   },

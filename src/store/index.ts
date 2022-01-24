@@ -8,6 +8,12 @@ export default createStore({
     sort: {name: 'release_date', title: 'RELEASE DATE'},
     sortOrder: 'desc'
   },
+  getters: {
+    movies: state => state.movies,
+    searchInput: state => state.searchInput,
+    sort: state => state.sort,
+    sortOrder: state => state.sortOrder,
+  },
   mutations: {
     setMovies(state, movies) {
       state.movies = movies;
