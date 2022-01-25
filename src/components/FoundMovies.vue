@@ -9,6 +9,7 @@
         v-for="item in movies"
         :key="item.id"
         :movie="item"
+        :ref="'mov'+item.id"
       ></movie-item>
     </div>
   </div>
@@ -21,16 +22,63 @@
 import FoundMoviesNav from "./FoundMoviesNav.vue";
 import MovieItem from "./MovieItem.vue";
 import Logo from "./Logo.vue";
+import isInViewPoint from './../utils/viewpoint';
+import { throttle } from 'lodash';
+
 export default {
+  data() {
+    return {
+      offsetTop: 0,
+    }
+  },
   computed: {
     movies() {
-      return require("../../movies.json");
+      return this.$store.getters.movies;
     },
     moviesCount() {
       return this.movies.length;
     },
   },
   components: { FoundMoviesNav, MovieItem, Logo },
+  methods: {
+    onScroll (e) {
+      this.offsetTop = window.pageYOffset || document.documentElement.scrollTop
+    },
+    throttledViewport: throttle(function() {
+      this.movies.forEach(mov => {
+        const movRef = this.$refs['mov'+mov.id]
+        if (movRef) {
+          const movieItem = movRef[0]
+          if (movieItem) {
+             movieItem.img_src = isInViewPoint(movieItem.$el) ? mov.poster_path : '';
+          } 
+        }
+      })
+    }, 800)
+  },
+  watch: {
+    offsetTop() {
+      this.throttledViewport();
+    },
+    movies: {
+      deep: true,
+      handler() {
+        this.$nextTick(() => {
+          this.offsetTop++;
+        });
+      }
+    }
+  },
+  async mounted() {
+    await this.$store.dispatch('getAllMovies');
+    this.offsetTop++;
+  },
+  created () {
+    window.addEventListener('scroll', this.onScroll);
+  },
+  destroyed () {
+    window.removeEventListener('scroll', this.onScroll);
+  },
 };
 </script>
 

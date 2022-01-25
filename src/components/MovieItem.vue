@@ -1,6 +1,6 @@
 <template>
   <div class="movie-item" @click="onDetailsClick">
-    <img :src="movie.poster_path" />
+    <img :src="img_src"/>
     <div id="movie-name">{{ movie.title }}</div>
     <div id="movie-year">
       {{ date }}
@@ -13,6 +13,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      img_src: '',
+    }
+  },
   props: {
     movie: Object,
   },
@@ -27,6 +32,7 @@ export default {
   methods: {
     onDetailsClick() {
       this.$router.push({ name: "Details", query: { id: this.movie.id } });
+      window.scrollTo(0,0)
     },
   },
 };
