@@ -31,10 +31,10 @@ export default {
   },
   computed: {
     sort() {
-      return this.$store.state.sort;
+      return this.$store.getters.sort;
     },
     sortOrder() {
-      return this.$store.state.sortOrder;
+      return this.$store.getters.sortOrder;
     }
   },
   methods: {
