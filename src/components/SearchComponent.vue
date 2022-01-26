@@ -15,8 +15,16 @@ export default {
     debouncedUpdate: debounce(function(val) {
       this.$store.dispatch('updateSearchInput', val);
       this.$store.dispatch('getAllMovies');
+      this.$router.push({name: 'Search', query: {search: val}})
     }, 1000)
   },
+  mounted() {
+    const searchQuery = this.$route.query.search;
+    if (searchQuery) {
+      this.$store.dispatch('updateSearchInput', searchQuery);
+      this.$store.dispatch('getAllMovies');
+    }
+  }
 };
 </script>
 
