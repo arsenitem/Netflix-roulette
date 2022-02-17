@@ -1,19 +1,13 @@
 <template>
   <div class="container">
     <router-view />
-    <found-movies />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import FoundMovies from "./components/FoundMovies.vue";
-
 export default defineComponent({
   name: "App",
-  components: {
-    FoundMovies,
-  },
 });
 </script>
 <style>
